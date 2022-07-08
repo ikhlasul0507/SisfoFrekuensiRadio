@@ -145,6 +145,8 @@
                                     <li><a href="<?php echo site_url();?>adm/kecamatan"><i class="fas fa-angle-double-right"></i> &nbsp;Kecamatan</a></li>
                                     <li><a href="<?php echo site_url();?>adm/service"><i class="fas fa-angle-double-right"></i> &nbsp;Service</a></li>
                                     <li><a href="<?php echo site_url();?>adm/upt"><i class="fas fa-angle-double-right"></i> &nbsp;UPT</a></li>
+                                    <li><a href="<?php echo site_url();?>adm/gangguan"><i class="fas fa-angle-double-right"></i> &nbsp;Gangguan</a></li>
+                                    <li><a href="<?php echo site_url();?>adm/sifat"><i class="fas fa-angle-double-right"></i> &nbsp;Sifat Gangguan</a></li>
                                 </ul>
                             </li>
 

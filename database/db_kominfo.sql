@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Jul 2022 pada 14.16
+-- Waktu pembuatan: 09 Jul 2022 pada 14.25
 -- Versi server: 5.7.21-log
 -- Versi PHP: 8.0.0
 
@@ -100,34 +100,6 @@ CREATE TABLE `notifikasi` (
   `is_read` int(11) NOT NULL,
   `notif_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `notifikasi`
---
-
-INSERT INTO `notifikasi` (`id_notif`, `id_tiket`, `status_ticket`, `notif_to`, `is_read`, `notif_at`) VALUES
-(1, '62c6f97974fbb', 'New', 'admin', 0, '2022-07-07 22:19:21'),
-(2, '62c7898ed3579', 'New', 'admin', 0, '2022-07-08 08:34:06'),
-(3, '62c78c210edbf', 'New', 'admin', 0, '2022-07-08 08:45:05'),
-(4, '62c78e88ef14b', 'New', 'admin', 0, '2022-07-08 08:55:20'),
-(5, '62c79d683e6f9', 'New', 'admin', 1, '2022-07-08 09:58:48'),
-(6, '62c8e14cc666c', 'New', 'admin', 0, '2022-07-09 09:00:44'),
-(7, '62c8ffbcc8a7e', 'New', 'admin', 0, '2022-07-09 11:10:36'),
-(8, '62c9017f72e11', 'New', 'admin', 0, '2022-07-09 11:18:07'),
-(9, '62c901baf198a', 'New', 'admin', 0, '2022-07-09 11:19:06'),
-(10, '62c902349d818', 'New', 'admin', 0, '2022-07-09 11:21:08'),
-(11, '62c902ea588bc', 'New', 'admin', 0, '2022-07-09 11:24:10'),
-(12, '62c903659ecd2', 'New', 'admin', 0, '2022-07-09 11:26:13'),
-(13, '62c90429b78c5', 'New', 'admin', 1, '2022-07-09 11:29:29'),
-(14, '62c903659ecd2', 'Verified', '62c54206ee051', 1, '2022-07-09 15:01:07'),
-(15, '62c90429b78c5', 'Verified', '62c54206ee051', 0, '2022-07-09 16:05:05'),
-(16, '62c90429b78c5', 'Closed', '62c54206ee051', 0, '2022-07-09 16:05:21'),
-(17, '62c8ffbcc8a7e', 'Verified', '62c54206ee051', 0, '2022-07-09 16:21:54'),
-(18, '62c8ffbcc8a7e', 'Resolved', '62c54206ee051', 0, '2022-07-09 16:22:03'),
-(19, '62c6f8d5456c2', 'Verified', '62c6882985b53', 0, '2022-07-09 16:31:00'),
-(20, '62c902ea588bc', 'NEW', '62c54206ee051', 0, '2022-07-09 16:33:06'),
-(21, '62c902ea588bc', 'Verified', '62c54206ee051', 0, '2022-07-09 16:35:11'),
-(22, '62c6f97974fbb', 'Verified', '62c6882985b53', 0, '2022-07-09 16:35:48');
 
 -- --------------------------------------------------------
 

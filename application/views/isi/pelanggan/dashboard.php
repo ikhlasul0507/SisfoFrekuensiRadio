@@ -205,7 +205,7 @@ $(function () {
             datasets: [
             {
                 label: "Jumlah",
-                backgroundColor: "#1b82ec",
+                backgroundColor: ["#ADFF2F","#008B8B", "#BDB76B","#CD5C5C"],
                 borderColor: "#1b82ec",
                 data: [
                     <?php foreach ($grafikList as $grafik4): ?>

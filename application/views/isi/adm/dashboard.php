@@ -31,7 +31,8 @@
                                                 <div class="text-white">
                                                     <h6 class="mt-0 text-white-50"><a href='' class="text-white">Total</a></h6>
                                                     <h4 class="mb-3 mt-0"><b> 
-                                                    10 Pelanggan</b></h4>
+                                                    <?php $array = array('deleted' => 0);
+  echo $total = $this->db->count_all_results('pt');?> Pelanggan</b></h4>
                                                     
                                                 </div>
                                                 <div class="mini-stat-icon">
@@ -50,7 +51,11 @@
                                                 <div class="text-white">
                                                     <h6 class="mt-0 text-white-50"><a href='' class="text-white">Total</a></h6>
                                                     <h4 class="mb-3 mt-0"><b> 
-                                                     100 Ticket</b></h4>
+                                                     <?php $array = array('status' => 'New');
+  echo $totalNew = $this->db->where($array)->count_all_results('tiket');?> Tiket Baru</b></h4>
+
+  <?php $array = array('status' => 'Verified');
+  $totalVerified = $this->db->where($array)->count_all_results('tiket');?>
                                                     
                                                 </div>
                                                 <div class="mini-stat-icon">
@@ -70,7 +75,12 @@
                                                 <div class="text-white">
                                                     <h6 class="mt-0 text-white-50"><a href="" class="text-white">Total</a></h6>
                                                     <h4 class="mb-3 mt-0"><b>
-                                                    100 Masalah</b></h4>
+                                                    <?php $array = array('status' => 'Closed');
+                                                    $array2 = array('status' => 'Resolved');
+  $total1 = $this->db->where($array)->count_all_results('tiket');
+  $total2 = $this->db->where($array2)->count_all_results('tiket');
+  echo $total2+$total1;
+  ?> Tiket Tertangani</b></h4>
                                                     
                                                 </div>
                                                 <div class="mini-stat-icon">
@@ -85,31 +95,31 @@
                             <!-- end row -->
 
                            <div class="row">
-                                <div class="col-xl-12">
+                                <div class="col-xl-6">
                                     <div class="card m-b-20">
                                         <div class="card-body">
             
-                                            <center><h4 class="mt-0 header-title"><b>Respon Pelanggan</b></h4></center>
+                                            <center><h4 class="mt-0 header-title"><b>Jumlah Tiket Berdasarkan Status Tiket</b></h4></center>
             
                                                         
-                                            <canvas id="chart_3" height="100"></canvas>
+                                            <canvas id="statusTiket" height="175"></canvas>
             
                                         </div>
                                     </div>
                                 </div>
             
-                                <!-- <div class="col-xl-6">
+                                <div class="col-xl-6">
                                     <div class="card m-b-20">
                                         <div class="card-body">
             
-                                           <center> <h4 class="mt-0 header-title"><b>Trend Kenaikan Bahan Pokok</b></h4></center>
+                                           <center> <h4 class="mt-0 header-title"><b>Jumlah Tiket Berdasarkan Capaian</b></h4></center>
             
                                                        
-                                            <canvas id="chart_3" height="180"></canvas>
+                                            <canvas id="TicketCapaian" height="150"></canvas>
             
                                         </div>
                                     </div>
-                                </div>  -->
+                                </div>
                             </div> 
 
                             
@@ -135,22 +145,71 @@ $(function () {
 
 'use strict';
 
-    if( $('#pokok_8').length > 0 ){
-		var ctx2 = document.getElementById("pokok_8").getContext("2d");
+    if( $('#TicketCapaian').length > 0 ){
+        var ctx6 = document.getElementById("TicketCapaian").getContext("2d");
+        var data6 = {
+            labels: [
+            "Tiket Unclose",
+            "Tiket Close"
+            ],
+            datasets: [
+            {
+                data: [<?=$totalNew+$totalVerified?>, <?=$total1+$total2?>],
+                backgroundColor: [
+                "#FFD700",
+                "#8A2BE2"
+                ],
+                hoverBackgroundColor: [
+                "#FFD700",
+                "#8A2BE2"
+                ]
+            }]
+        };
+        
+        var pieChart  = new Chart(ctx6,{
+            type: 'pie',
+            data: data6,
+            options: {
+                animation: {
+                    duration:   3000
+                },
+                responsive: true,
+                legend: {
+                    labels: {
+                        fontFamily: "Poppins",
+                        fontColor:"#878787"
+                    }
+                },
+                tooltip: {
+                    backgroundColor:'rgba(33,33,33,1)',
+                    cornerRadius:0,
+                    footerFontFamily:"'Poppins'"
+                },
+                elements: {
+                    arc: {
+                        borderWidth: 0
+                    }
+                }
+            }
+        });
+    }
+
+    if( $('#statusTiket').length > 0 ){
+		var ctx2 = document.getElementById("statusTiket").getContext("2d");
 		var data2 = {
 			labels: [
-                <?php foreach ($grafik as $grafik2): ?>
-          "<?php echo $grafik2['nm_bahan']; ?> - <?php echo $grafik2['nm_lokasi']; ?>",
+                <?php foreach ($grafikList as $grafik2): ?>
+          "<?php echo $grafik2->status; ?>",
          <?php endforeach; ?>
             ],
 			datasets: [
 			{
-				label: "Harga Rp",
-				backgroundColor: "#1b82ec",
-				borderColor: "#1b82ec",
+				label: "Jumlah",
+				backgroundColor: ["#ADFF2F","#CD5C5C", "#ADFF2F","#CD5C5C"],
+				borderColor: "#ADFF2F",
 				data: [
-                    <?php foreach ($grafik as $grafik4): ?>
-                    <?php echo $grafik4['harga'] ?>,
+                    <?php foreach ($grafikList as $grafik4): ?>
+                    <?php echo $grafik4->jumlah; ?>,
 
                     <?php endforeach; ?>
                 ]

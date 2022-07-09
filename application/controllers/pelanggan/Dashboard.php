@@ -15,8 +15,14 @@ class Dashboard extends My_Controller {
 
 	public function index()
 	{
+		$idUser=$this->session->userdata('id_user');
+		$grafikQuery = $this->db->query("SELECT COUNT(*) as jumlah, status FROM tiket WHERE id_pt='$idUser' GROUP BY status")->result();
+
+		$data=array(
+            "grafikList"=>$grafikQuery,
+        );
       
-		 $this->Mypage('isi/pelanggan/dashboard');
+		 $this->Mypage('isi/pelanggan/dashboard', $data);
 	}
 
     

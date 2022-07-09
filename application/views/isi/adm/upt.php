@@ -54,7 +54,7 @@
                                     <td><?php echo $u->nm_pt ?><br>Telp :<?php echo $u->telp ?></td>
                                     <td><?php echo $u->pic_name ?> - <?php echo $u->pic_jabatan ?> <br>Email : <?php echo $u->pic_email ?></td>
                                     <td><?php echo $u->alamat ?></td>
-                                    <td><?php echo $u->created_at ?></td>
+                                    <td><?php echo $u->register_at ?></td>
                                 </tr>
                                 <?php endforeach; ?>
                                                 </tbody>

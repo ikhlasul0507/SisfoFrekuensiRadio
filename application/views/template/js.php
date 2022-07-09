@@ -45,6 +45,29 @@
         <script src="<?php echo base_url();?>assets/js/app.js"></script>
 
         <script>
+
+            function getKecamatan(){
+                var idKabupaten = document.getElementById('id_kabupaten').value;
+                console.log(idKabupaten);
+                $.ajax({
+                    type: "POST",
+                    url: '<?= base_url('pelanggan/Tiket/getKecamatanJSON');?>',
+                    data: {
+                        idKabupaten : idKabupaten
+                    },
+                    success: function(data)
+                    {
+                        var value = JSON.parse(data);
+                        var temp = "";
+                        for (var i=0;  i < value.length; i++) {
+                            temp += "<option value='"+value[i].id_kecamatan+"'>"+value[i].nm_kecamatan+"</option>";
+                        }
+                        console.log(JSON.parse(data));
+                        console.log(temp);
+                        document.getElementById('id_kecamatan').innerHTML = temp;
+                    }
+                })
+            }
             $(document).ready(function () {
                 if($("#elm1").length > 0){
                     tinymce.init({

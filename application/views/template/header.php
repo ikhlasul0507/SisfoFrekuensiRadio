@@ -47,7 +47,31 @@
                         <li class="dropdown notification-list">
                                 <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <i class="mdi mdi-bell noti-icon"></i>
-                                    <span class="badge badge-pill badge-info noti-icon-badge">3</span>
+                                    <span class="badge badge-pill badge-info noti-icon-badge">
+                                        <?php 
+
+                                        if ($this->session->userdata('level') == "Administrator") {
+                                            $fieldName='notif_to';
+                                            $idUserLogin='admin';
+                                            $link='adm';
+                                            $listNotif = $this->db->query("SELECT*FROM notifikasi
+                                              
+                                              LEFT JOIN tiket ON tiket.id_tiket=notifikasi.id_tiket
+                                              LEFT JOIN pt ON pt.id_pt=tiket.id_pt
+                                              WHERE notifikasi.notif_to='$idUserLogin' AND notifikasi.is_read=0  ORDER BY notifikasi.notif_at DESC LIMIT 5 ")->result();
+                                        }else{
+                                            $fieldName='id_pt';
+                                            $link='pelanggan';
+                                            $idUserLogin=$this->session->userdata('id_user');
+                                            $listNotif = $this->db->query("SELECT*FROM notifikasi
+                                              LEFT JOIN tiket ON tiket.id_tiket=notifikasi.id_tiket
+                                              LEFT JOIN pt ON pt.id_pt=tiket.id_pt
+                                              WHERE notifikasi.notif_to='$idUserLogin' AND notifikasi.is_read=0  ORDER BY notifikasi.notif_at DESC LIMIT 5")->result();
+                                        }
+
+                                        $array = array('is_read' => 0, 'notif_to' => $idUserLogin);
+  echo $total = $this->db->where($array)->count_all_results('notifikasi');?>
+                                    </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
                                     <!-- item-->
@@ -56,13 +80,40 @@
                                     </h6>
                                     <div class="slimscroll notification-item-list">
                                         <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+
+                                        <?php
+                                             if ($total == 0) {
+                                         ?>
+                                         <br><br><br>
+                                              <center>Tidak ada Pemberitahuan</center>
+                                          <?php
+                                             }else{
+                                         ?>
+
+                                         <?php $no=1;
+         foreach ($listNotif as $n): ?>
+
+                                        <a href="<?php echo base_url().$link.'/tiket/detail/'.$n->id_tiket.'/'.$n->id_notif?>" class="dropdown-item notify-item">
                                             <div class="notify-icon bg-primary"><i class="mdi mdi-message"></i></div>
-                                            <p class="notify-details">New Message received<span class="text-muted">You have 87 unread messages</span></p>
+                                            <p class="notify-details"><?php echo $n->status_ticket ?> - <?php echo $n->perihal ?>
+                                            <span class="text-muted">
+                                                <?php if($this->session->userdata('level')=="Administrator"){ ?>
+                                                        Dari : <?php echo $n->nm_pt ?> - <?php echo $n->pic_name ?>
+                                                    <?php }else{ ?>
+                                                        Dari : Admin
+                                                      
+                                                      <?php }?>
+                                            </span></p>
                                         </a>
+
+                                        <?php endforeach; ?>
+
+                                        <?php
+                                             }
+                                         ?>
                                     </div>
                                     <!-- All-->
-                                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
+                                    <a href="<?php echo base_url().$link.'/notifikasi'?>" class="dropdown-item text-center text-primary">
                                         Lihat Semua <i class="fi-arrow-right"></i>
                                     </a>
                                 </div>        
@@ -156,6 +207,16 @@
                                 </a>
                             </li>
 
+                            <li>
+                                <a href="javascript:void(0);" class="waves-effect"><font color=""><i class="fas fa-folder-open"></i></font><span> Data Tiket<span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
+                                <ul class="submenu">
+                                    <li><a href="<?php echo site_url();?>adm/tiket"><i class="fas fa-angle-double-right"></i> &nbsp;New</a></li>
+                                    <li><a href="<?php echo site_url();?>adm/tiket/inprogress"><i class="fas fa-angle-double-right"></i> &nbsp;Verified</a></li>
+                                    <li><a href="<?php echo site_url();?>adm/tiket/close"><i class="fas fas fa-angle-double-right"></i> &nbsp;Close</a></li>
+                                </ul>
+                            </li>
+
+
                              <li>
                                 <a href="<?php echo site_url();?>adm/user" class="waves-effect">
                                     <font color=""><i class="fas fa-users"></i></font><span> Users</span>
@@ -174,8 +235,8 @@
                                 <a href="javascript:void(0);" class="waves-effect"><font color=""><i class="fas fa-folder-open"></i></font><span> Data Tiket<span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
                                 <ul class="submenu">
                                     <li><a href="<?php echo site_url();?>pelanggan/tiket"><i class="fas fa-angle-double-right"></i> &nbsp;New</a></li>
-                                    <li><a href="<?php echo site_url();?>adm/kecamatan"><i class="fas fa-angle-double-right"></i> &nbsp;Inprogress</a></li>
-                                    <li><a href="<?php echo site_url();?>adm/service"><i class="fas fas fa-angle-double-right"></i> &nbsp;Close</a></li>
+                                    <li><a href="<?php echo site_url();?>pelanggan/tiket/inprogress"><i class="fas fa-angle-double-right"></i> &nbsp;Verified</a></li>
+                                    <li><a href="<?php echo site_url();?>pelanggan/tiket/close"><i class="fas fas fa-angle-double-right"></i> &nbsp;Close</a></li>
                                 </ul>
                             </li>
 

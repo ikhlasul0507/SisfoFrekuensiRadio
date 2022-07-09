@@ -15,8 +15,13 @@ class Dashboard extends My_Controller {
 
 	public function index()
 	{
+		$grafikQuery = $this->db->query("SELECT COUNT(*) as jumlah, status FROM tiket GROUP BY status")->result();
+
+		$data=array(
+            "grafikList"=>$grafikQuery,
+        );
       
-		 $this->Mypage('isi/adm/dashboard');
+		 $this->Mypage('isi/adm/dashboard', $data);
 	}
 
     

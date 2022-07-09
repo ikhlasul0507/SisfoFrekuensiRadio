@@ -23,4 +23,17 @@ public function __construct()
 		$this->load->view('template/index',$data);
 	}
 
+	function Mypage2($content,$data=NULL){
+
+		 $id = $this->session->userdata('id_user');
+         $user = $this->M_user;
+         $data["myuser"] = $user->getById($id);
+		 
+		$data['headernya'] = $this->load->view('template/header',$data,TRUE);
+		$data['isinya'] = $this->load->view($content,$data,TRUE);
+		$data['footernya'] = $this->load->view('template/footer',$data,TRUE);
+		$data['jsnya'] = $this->load->view('template/js2',$data,TRUE);
+		$this->load->view('template/index',$data);
+	}
+
 }
